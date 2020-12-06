@@ -4,4 +4,4 @@ import ClearCache from './api/clearCache'
 
 export const monthTotalPaymentAmount = monthTotalPaymentAmountAPI
 export const dailyPaymentAmounts = DailyPaymentAmountsAPI
-export const clearChache = ClearCache
+export const clearCache = ClearCache
