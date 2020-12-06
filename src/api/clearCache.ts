@@ -9,6 +9,6 @@ export default functions.https.onRequest(async (request, response) => {
   await new Collection('zaim-get-money-cache').clear()
 
   cors(request, response, () => {
-    response.json({ message: 'OK' })
+    response.json({ data: { message: 'OK' } })
   })
 })
