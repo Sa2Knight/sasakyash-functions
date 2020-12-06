@@ -2,7 +2,7 @@ import { config } from 'firebase-functions'
 import { Money } from './types'
 import Zaim from 'zaim'
 import * as dayjs from 'dayjs'
-import Store from './store'
+import { Document } from './store'
 import { PaymentList } from './models/paymentList'
 
 type Dayjs = dayjs.Dayjs
@@ -27,7 +27,7 @@ export const fetchPaymentList = async (startDate: Dayjs, endDate: Dayjs) => {
   }
 
   // キャッシュ用のストアの準備
-  const store = new Store('zaim-get-money-cache', JSON.stringify(params))
+  const store = new Document('zaim-get-money-cache', JSON.stringify(params))
 
   // キャッシュがある場合はそれをモデル化してそのまま返却する
   const cachedData = await store.read()
