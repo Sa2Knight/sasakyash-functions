@@ -15,12 +15,46 @@ const zaim = new Zaim({
   accessTokenSecret: Config.token_secret as string
 })
 
+export const Categories = [
+  {
+    id: 105,
+    label: '水道・光熱費'
+  }
+]
+
+export const Genres = [
+  {
+    id: 10502,
+    label: '水道料金'
+  },
+  {
+    id: 10503,
+    label: '電気料金'
+  },
+  {
+    id: 10502,
+    label: 'ガス料金'
+  }
+]
+export const genreIdToLabel = (id: number) => {
+  return Genres.find(g => g.id === id)?.label
+}
+
+export const categoryIdToLabel = (id: number) => {
+  return Categories.find(c => c.id === id)?.label
+}
+
+export const categoryLabelToId = (label: string) => {
+  return Categories.find(c => c.label === label)?.id
+}
+
 /**
  * 支払い一覧をAPIから取得する
  */
-export const fetchPaymentList = async (startDate: Dayjs, endDate: Dayjs) => {
+export const fetchPaymentList = async (startDate: Dayjs, endDate: Dayjs, categoryId?: number) => {
   // Zaim API 用のパラメータを組み立てる
   const params = {
+    category_id: categoryId,
     start_date: startDate.format('YYYY-MM-DD'),
     end_date: endDate.format('YYYY-MM-DD'),
     mode: 'payment' as 'payment'

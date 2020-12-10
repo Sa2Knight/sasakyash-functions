@@ -1,9 +1,23 @@
 import { Dayjs } from 'dayjs'
 import { dateRange } from '../utils/date'
-import { Money, PaymentType } from '../types'
+import { Money, PaymentType, SimpleMoney } from '../types'
+import { categoryIdToLabel, genreIdToLabel } from '../zaim'
 
 export class PaymentList {
   constructor(public payments: Money[]) {}
+
+  /**
+   * APIレスポンスのデータ構造から、クライアント用データ構造に変換する
+   */
+  convertToSimpleMoneyObjects(): SimpleMoney[] {
+    return this.payments.map(money => ({
+      date: money.date,
+      category: categoryIdToLabel(money.category_id)!,
+      genre: genreIdToLabel(money.genre_id)!,
+      amount: money.amount,
+      place: money.place
+    }))
+  }
 
   /**
    * 公費または私費で絞り込む

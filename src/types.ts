@@ -20,3 +20,11 @@ export interface Money {
   place_uid: string
   place: string
 }
+
+export interface SimpleMoney {
+  date: string
+  category: string
+  genre: string
+  amount: number
+  place: string
+}
