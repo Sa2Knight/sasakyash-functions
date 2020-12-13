@@ -9,7 +9,7 @@ export class PaymentList {
   /**
    * 内包する日付のリストを戻す
    */
-  days() {
+  formattedDays() {
     return this.payments.map(payment => payment.formattedDate)
   }
 

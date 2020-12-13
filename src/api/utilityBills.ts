@@ -11,10 +11,14 @@ type UtilityBills = {
   }
 }
 
+type ResponseType = {
+  data: UtilityBills
+}
+
 export default functions.https.onRequest(async (request, response) => {
   const utilityBills: UtilityBills = {}
   const paymentList = await fetchPaymentList(dayjs('1980-01-01'), dayjs(), 105)
-  paymentList.days().forEach(day => (utilityBills[day] = {}))
+  paymentList.formattedDays().forEach(day => (utilityBills[day] = {}))
   paymentList.payments.forEach(payment => {
     if (payment.isWater) {
       utilityBills[payment.formattedDate].water = payment.amount
@@ -24,9 +28,8 @@ export default functions.https.onRequest(async (request, response) => {
       utilityBills[payment.formattedDate].electric = payment.amount
     }
   })
+  const responseObject: ResponseType = { data: utilityBills }
   cors(request, response, () => {
-    response.json({
-      data: utilityBills
-    })
+    response.json(responseObject)
   })
 })

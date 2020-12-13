@@ -3,9 +3,15 @@ import { fetchPaymentList } from '../zaim'
 import * as dayjs from 'dayjs'
 const cors = require('cors')({ origin: true })
 
+type ResponseType = {
+  data: {
+    private: number
+    public: number
+  }
+}
+
 /**
  * monthTotalPaymentAmount API 指定月の総支払額を取得する
- * reponse { data: { private: 0, public: 0} }
  */
 export default functions.https.onRequest(async (request, response) => {
   // リクエストパラメータを元に、集計対象期間を決定する
@@ -22,13 +28,15 @@ export default functions.https.onRequest(async (request, response) => {
   const privateTotalAmount = paymentList.filterBy('private').totalAmount()
   const publicTotalAmount = paymentList.filterBy('public').totalAmount()
 
+  const responseObject: ResponseType = {
+    data: {
+      private: privateTotalAmount,
+      public: publicTotalAmount
+    }
+  }
+
   // レスポンスを作成する
   cors(request, response, () => {
-    response.json({
-      data: {
-        private: privateTotalAmount,
-        public: publicTotalAmount
-      }
-    })
+    response.json(responseObject)
   })
 })
