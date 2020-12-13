@@ -24,15 +24,15 @@ export const Categories = [
 
 export const Genres = [
   {
-    id: 10502,
+    id: 10501,
     label: '水道料金'
   },
   {
-    id: 10503,
+    id: 10502,
     label: '電気料金'
   },
   {
-    id: 10502,
+    id: 10503,
     label: 'ガス料金'
   }
 ]

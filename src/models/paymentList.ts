@@ -1,22 +1,22 @@
 import { Dayjs } from 'dayjs'
 import { dateRange } from '../utils/date'
-import { Money, PaymentType, SimpleMoney } from '../types'
-import { categoryIdToLabel, genreIdToLabel } from '../zaim'
+import { Money, PaymentType } from '../types'
 
 export class PaymentList {
   constructor(public payments: Money[]) {}
 
   /**
-   * APIレスポンスのデータ構造から、クライアント用データ構造に変換する
+   * 内包する日付のリストを戻す
    */
-  convertToSimpleMoneyObjects(): SimpleMoney[] {
-    return this.payments.map(money => ({
-      date: money.date,
-      category: categoryIdToLabel(money.category_id)!,
-      genre: genreIdToLabel(money.genre_id)!,
-      amount: money.amount,
-      place: money.place
-    }))
+  days() {
+    return this.payments.map(payment => payment.date)
+  }
+
+  /**
+   * 合計金額を取得する
+   */
+  totalAmount() {
+    return this.payments.reduce((total, payment) => total + payment.amount, 0)
   }
 
   /**
@@ -31,13 +31,6 @@ export class PaymentList {
     )
 
     return type === 'public' ? filteredPaymentList : filteredPaymentList.excludeCarryOverPayment()
-  }
-
-  /**
-   * 合計金額を取得する
-   */
-  totalAmount() {
-    return this.payments.reduce((total, payment) => total + payment.amount, 0)
   }
 
   /**
