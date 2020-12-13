@@ -43,11 +43,11 @@ export default class Payment {
     return this.raw.genre_id === 10501
   }
 
-  get isGas() {
+  get isElectric() {
     return this.raw.genre_id === 10502
   }
 
-  get isElectric() {
+  get isGas() {
     return this.raw.genre_id === 10503
   }
 
