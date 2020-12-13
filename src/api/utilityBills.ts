@@ -16,16 +16,12 @@ export default functions.https.onRequest(async (request, response) => {
   const paymentList = await fetchPaymentList(dayjs('1980-01-01'), dayjs(), 105)
   paymentList.days().forEach(day => (utilityBills[day] = {}))
   paymentList.payments.forEach(payment => {
-    switch (payment.genre_id) {
-      case 10501:
-        utilityBills[payment.date].water = payment.amount
-        break
-      case 10502:
-        utilityBills[payment.date].electric = payment.amount
-        break
-      case 10503:
-        utilityBills[payment.date].gas = payment.amount
-        break
+    if (payment.isWater) {
+      utilityBills[payment.formattedDate].water = payment.amount
+    } else if (payment.isGas) {
+      utilityBills[payment.formattedDate].gas = payment.amount
+    } else if (payment.isElectric) {
+      utilityBills[payment.formattedDate].electric = payment.amount
     }
   })
   cors(request, response, () => {

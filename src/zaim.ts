@@ -1,9 +1,9 @@
 import { config } from 'firebase-functions'
-import { Money } from './types'
 import Zaim from 'zaim'
 import * as dayjs from 'dayjs'
 import { Document } from './store'
 import { PaymentList } from './models/paymentList'
+import Payment, { Money } from './models/payment'
 
 type Dayjs = dayjs.Dayjs
 const Config = config().zaim
@@ -14,39 +14,6 @@ const zaim = new Zaim({
   accessToken: Config.token as string,
   accessTokenSecret: Config.token_secret as string
 })
-
-export const Categories = [
-  {
-    id: 105,
-    label: '水道・光熱費'
-  }
-]
-
-export const Genres = [
-  {
-    id: 10501,
-    label: '水道料金'
-  },
-  {
-    id: 10502,
-    label: '電気料金'
-  },
-  {
-    id: 10503,
-    label: 'ガス料金'
-  }
-]
-export const genreIdToLabel = (id: number) => {
-  return Genres.find(g => g.id === id)?.label
-}
-
-export const categoryIdToLabel = (id: number) => {
-  return Categories.find(c => c.id === id)?.label
-}
-
-export const categoryLabelToId = (label: string) => {
-  return Categories.find(c => c.label === label)?.id
-}
 
 /**
  * 支払い一覧をAPIから取得する
@@ -65,9 +32,9 @@ export const fetchPaymentList = async (startDate: Dayjs, endDate: Dayjs, categor
   const store = new Document('zaim-get-money-cache', JSON.stringify(params))
 
   // キャッシュがある場合はそれをモデル化してそのまま返却する
-  const cachedData = await store.read()
+  const cachedData = (await store.read()) as Money[]
   if (cachedData) {
-    return new PaymentList(cachedData)
+    return new PaymentList(cachedData.map(money => new Payment(money)))
   }
 
   // Zaim API を呼び出し、レスポンスをパースする
@@ -78,5 +45,5 @@ export const fetchPaymentList = async (startDate: Dayjs, endDate: Dayjs, categor
   await store.write(rawPaymentList)
 
   // モデル化して返却する
-  return new PaymentList(rawPaymentList)
+  return new PaymentList(rawPaymentList.map(money => new Payment(money)))
 }

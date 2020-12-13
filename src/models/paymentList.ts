@@ -1,15 +1,16 @@
 import { Dayjs } from 'dayjs'
+import Payment from './payment'
 import { dateRange } from '../utils/date'
-import { Money, PaymentType } from '../types'
+import { PaymentType } from '../types'
 
 export class PaymentList {
-  constructor(public payments: Money[]) {}
+  constructor(public payments: Payment[]) {}
 
   /**
    * 内包する日付のリストを戻す
    */
   days() {
-    return this.payments.map(payment => payment.date)
+    return this.payments.map(payment => payment.formattedDate)
   }
 
   /**
@@ -22,15 +23,12 @@ export class PaymentList {
   /**
    * 公費または私費で絞り込む
    */
-  filterBy(type: PaymentType) {
-    const paymentTypeComment = type === 'private' ? '私費' : '公費'
-    const filteredPaymentList = new PaymentList(
-      this.payments.filter(payment => {
-        return payment.comment.indexOf(paymentTypeComment) >= 0
-      })
-    )
-
-    return type === 'public' ? filteredPaymentList : filteredPaymentList.excludeCarryOverPayment()
+  filterBy(type: PaymentType): PaymentList {
+    if (type === 'private') {
+      return new PaymentList(this.payments.filter(payment => payment.isPrivate && !payment.isCarryOver))
+    } else {
+      return new PaymentList(this.payments.filter(payment => payment.isPublic))
+    }
   }
 
   /**
@@ -42,21 +40,10 @@ export class PaymentList {
     dateRange(startDate, endDate).forEach(date => (amountTable[date.format('YYYY-MM-DD')] = 0))
 
     this.payments.forEach(payment => {
-      if (amountTable[payment.date] !== undefined) {
-        amountTable[payment.date] += payment.amount
+      if (amountTable[payment.formattedDate] !== undefined) {
+        amountTable[payment.formattedDate] += payment.amount
       }
     })
     return amountTable
-  }
-
-  /**
-   * キャリーオーバー用途の支出を取り除く
-   */
-  private excludeCarryOverPayment() {
-    return new PaymentList(
-      this.payments.filter(payment => {
-        return payment.comment.indexOf('キャリーオーバー') === -1
-      })
-    )
   }
 }
