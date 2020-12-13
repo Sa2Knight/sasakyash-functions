@@ -59,6 +59,7 @@ export const fetchPaymentList = async (startDate: Dayjs, endDate: Dayjs, categor
     end_date: endDate.format('YYYY-MM-DD'),
     mode: 'payment' as 'payment'
   }
+  if (!categoryId) delete params.category_id
 
   // キャッシュ用のストアの準備
   const store = new Document('zaim-get-money-cache', JSON.stringify(params))
