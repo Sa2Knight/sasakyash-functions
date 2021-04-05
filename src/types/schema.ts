@@ -35,11 +35,13 @@ export interface operations {
       200: {
         content: {
           'application/json': {
-            /** 2021-03-01 など、各月の1日の日付文字列がキーとなる */
-            [key: string]: {
-              gas?: number
-              water?: number
-              electric?: number
+            data: {
+              /** 2021-03-01 など、各月の1日の日付文字列がキーとなる */
+              [key: string]: {
+                gas?: number
+                water?: number
+                electric?: number
+              }
             }
           }
         }
@@ -52,7 +54,9 @@ export interface operations {
       200: {
         content: {
           'application/json': {
-            message?: string
+            data: {
+              message: string
+            }
           }
         }
       }
@@ -72,8 +76,10 @@ export interface operations {
       200: {
         content: {
           'application/json': {
-            private?: number
-            public?: number
+            data: {
+              private: number
+              public: number
+            }
           }
         }
       }
@@ -94,8 +100,10 @@ export interface operations {
       200: {
         content: {
           'application/json': {
-            days?: string[]
-            amounts?: number[]
+            data: {
+              days: string[]
+              amounts: number[]
+            }
           }
         }
       }

@@ -20,29 +20,35 @@ paths:
                 description: ''
                 type: object
                 properties:
-                  additionalProperties:
+                  data:
                     type: object
-                    example: '2021-03-01'
-                    description: 2021-03-01 など、各月の1日の日付文字列がキーとなる
                     properties:
-                      gas:
-                        type: number
-                      water:
-                        type: number
-                      electric:
-                        type: number
+                      additionalProperties:
+                        type: object
+                        example: '2021-03-01'
+                        description: 2021-03-01 など、各月の1日の日付文字列がキーとなる
+                        properties:
+                          gas:
+                            type: number
+                          water:
+                            type: number
+                          electric:
+                            type: number
+                required:
+                  - data
               examples:
                 example-1:
                   value:
-                    '2021-03-01':
-                      gas: 4227
-                    '2021-02-01':
-                      gas: 3219
-                      water: 5814
-                    '2021-01-01':
-                      water: 5731
-                      gas: 5648
-                      electric: 26937
+                    data:
+                      '2021-03-01':
+                        gas: 4227
+                      '2021-02-01':
+                        gas: 3219
+                        water: 5814
+                      '2021-01-01':
+                        water: 5731
+                        gas: 5648
+                        electric: 26937
       operationId: fetchUtilityBills
       description: 全期間を対象に、月ごとの電気・ガス・水道代の集計を取得する
   /clearCache:
@@ -58,12 +64,21 @@ paths:
                 description: ''
                 type: object
                 properties:
-                  message:
-                    type: string
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        minLength: 1
+                    required:
+                      - message
+                required:
+                  - data
               examples:
                 example-1:
                   value:
-                    message: OK
+                    data:
+                      message: OK
       operationId: fetchClearCache
       description: zaim API から取得した生データのキャッシュを破棄する
   /monthTotalPaymentAmount:
@@ -79,15 +94,24 @@ paths:
                 description: ''
                 type: object
                 properties:
-                  private:
-                    type: number
-                  public:
-                    type: number
+                  data:
+                    type: object
+                    properties:
+                      private:
+                        type: number
+                      public:
+                        type: number
+                    required:
+                      - private
+                      - public
+                required:
+                  - data
               examples:
                 example-1:
                   value:
-                    private: 10890
-                    public: 248758
+                    data:
+                      private: 10890
+                      public: 248758
       operationId: fetchMonthTotalPaymentAmount
       description: 今月(または指定した月) の、公費/私費それぞれの累計支出額を取得する
       parameters:
@@ -116,81 +140,90 @@ paths:
               schema:
                 type: object
                 properties:
-                  days:
-                    type: array
-                    items:
-                      type: string
-                  amounts:
-                    type: array
-                    items:
-                      type: number
+                  data:
+                    type: object
+                    required:
+                      - days
+                      - amounts
+                    properties:
+                      days:
+                        type: array
+                        items:
+                          type: string
+                      amounts:
+                        type: array
+                        items:
+                          type: number
+                required:
+                  - data
               examples:
                 example-1:
                   value:
-                    days:
-                      - '2021-01-01'
-                      - '2021-01-02'
-                      - '2021-01-03'
-                      - '2021-01-04'
-                      - '2021-01-05'
-                      - '2021-01-06'
-                      - '2021-01-07'
-                      - '2021-01-08'
-                      - '2021-01-09'
-                      - '2021-01-10'
-                      - '2021-01-11'
-                      - '2021-01-12'
-                      - '2021-01-13'
-                      - '2021-01-14'
-                      - '2021-01-15'
-                      - '2021-01-16'
-                      - '2021-01-17'
-                      - '2021-01-18'
-                      - '2021-01-19'
-                      - '2021-01-20'
-                      - '2021-01-21'
-                      - '2021-01-22'
-                      - '2021-01-23'
-                      - '2021-01-24'
-                      - '2021-01-25'
-                      - '2021-01-26'
-                      - '2021-01-27'
-                      - '2021-01-28'
-                      - '2021-01-29'
-                      - '2021-01-30'
-                      - '2021-01-31'
-                    amounts:
-                      - 272051
-                      - 13622
-                      - 0
-                      - 0
-                      - 6291
-                      - 3254
-                      - 0
-                      - 0
-                      - 2518
-                      - 2858
-                      - 745
-                      - 3514
-                      - 1876
-                      - 1506
-                      - 9669
-                      - 4911
-                      - 863
-                      - 0
-                      - 196
-                      - 5126
-                      - 0
-                      - 564
-                      - 559
-                      - 0
-                      - 7091
-                      - 14164
-                      - 832
-                      - 394
-                      - 2466
-                      - 3660
-                      - 51630
+                    data:
+                      days:
+                        - '2021-01-01'
+                        - '2021-01-02'
+                        - '2021-01-03'
+                        - '2021-01-04'
+                        - '2021-01-05'
+                        - '2021-01-06'
+                        - '2021-01-07'
+                        - '2021-01-08'
+                        - '2021-01-09'
+                        - '2021-01-10'
+                        - '2021-01-11'
+                        - '2021-01-12'
+                        - '2021-01-13'
+                        - '2021-01-14'
+                        - '2021-01-15'
+                        - '2021-01-16'
+                        - '2021-01-17'
+                        - '2021-01-18'
+                        - '2021-01-19'
+                        - '2021-01-20'
+                        - '2021-01-21'
+                        - '2021-01-22'
+                        - '2021-01-23'
+                        - '2021-01-24'
+                        - '2021-01-25'
+                        - '2021-01-26'
+                        - '2021-01-27'
+                        - '2021-01-28'
+                        - '2021-01-29'
+                        - '2021-01-30'
+                        - '2021-01-31'
+                      amounts:
+                        - 272051
+                        - 13622
+                        - 0
+                        - 0
+                        - 6291
+                        - 3254
+                        - 0
+                        - 0
+                        - 2518
+                        - 2858
+                        - 745
+                        - 3514
+                        - 1876
+                        - 1506
+                        - 9669
+                        - 4911
+                        - 863
+                        - 0
+                        - 196
+                        - 5126
+                        - 0
+                        - 564
+                        - 559
+                        - 0
+                        - 7091
+                        - 14164
+                        - 832
+                        - 394
+                        - 2466
+                        - 3660
+                        - 51630
       operationId: fetchDailyPaymentAmount
       description: 日毎の公費または私費の支出額を集計する
       parameters:

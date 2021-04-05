@@ -11,7 +11,7 @@ export default functions.https.onRequest(async (request, response) => {
 
   cors(request, response, () => {
     const responseObject: APIResponseType<'fetchClearCache'> = {
-      message: 'OK'
+      data: { message: 'OK' }
     }
     response.json(responseObject)
   })
