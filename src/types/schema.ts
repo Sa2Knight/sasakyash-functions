@@ -52,7 +52,7 @@ export interface operations {
       200: {
         content: {
           'application/json': {
-            message: string
+            message?: string
           }
         }
       }
@@ -72,8 +72,8 @@ export interface operations {
       200: {
         content: {
           'application/json': {
-            private: number
-            public: number
+            private?: number
+            public?: number
           }
         }
       }
@@ -94,8 +94,8 @@ export interface operations {
       200: {
         content: {
           'application/json': {
-            days: string[]
-            amounts: number[]
+            days?: string[]
+            amounts?: number[]
           }
         }
       }

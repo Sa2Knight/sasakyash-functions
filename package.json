@@ -11,8 +11,7 @@
     "shell": "yarn build && firebase functions:shell",
     "start": "yarn shell",
     "deploy": "yarn firebase deploy --only functions",
-    "logs": "yarn firebase functions:log",
-    "build_type": "npx openapi-typescript doc/swagger/index.yaml --output src/types/schema.ts"
+    "logs": "yarn firebase functions:log"
   },
   "engines": {
     "node": "12"

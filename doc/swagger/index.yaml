@@ -31,8 +31,6 @@ paths:
                         type: number
                       electric:
                         type: number
-                required:
-                  - additionalProperties
               examples:
                 example-1:
                   value:
@@ -62,8 +60,6 @@ paths:
                 properties:
                   message:
                     type: string
-                required:
-                  - message
               examples:
                 example-1:
                   value:
@@ -87,9 +83,6 @@ paths:
                     type: number
                   public:
                     type: number
-                required:
-                  - private
-                  - public
               examples:
                 example-1:
                   value:
@@ -131,9 +124,6 @@ paths:
                     type: array
                     items:
                       type: number
-                required:
-                  - days
-                  - amounts
               examples:
                 example-1:
                   value:
