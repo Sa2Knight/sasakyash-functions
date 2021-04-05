@@ -1,5 +1,6 @@
 {
-  "name": "functions",
+  "name": "sasakyash-functions",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "lint": "yarn eslint \"src/**/*\"",
