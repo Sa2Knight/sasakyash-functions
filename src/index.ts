@@ -1,4 +1,4 @@
-import monthTotalPaymentAmountAPI from './api/monthTotapPaymentAmount'
+import monthTotalPaymentAmountAPI from './api/monthTotalPaymentAmount'
 import DailyPaymentAmountsAPI from './api/dailyPaymentAmount'
 import UtilityBillsAPI from './api/utilityBills'
 import ClearCache from './api/clearCache'
