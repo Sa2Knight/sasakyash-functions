@@ -23,10 +23,8 @@ export default functions.https.onRequest(async (request, response) => {
   const publicTotalAmount = paymentList.filterBy('public').totalAmount()
 
   const responseObject: APIResponseType<'fetchMonthTotalPaymentAmount'> = {
-    data: {
-      private: privateTotalAmount,
-      public: publicTotalAmount
-    }
+    private: privateTotalAmount,
+    public: publicTotalAmount
   }
 
   // レスポンスを作成する

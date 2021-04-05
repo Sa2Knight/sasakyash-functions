@@ -27,10 +27,8 @@ export default functions.https.onRequest(async (request, response) => {
 
   // レスポンスを作成する
   const responseObject: APIResponseType<'fetchDailyPaymentAmount'> = {
-    data: {
-      days: Object.keys(amountsByDate),
-      amounts: Object.values(amountsByDate)
-    }
+    days: Object.keys(amountsByDate),
+    amounts: Object.values(amountsByDate)
   }
   cors(request, response, () => {
     response.json(responseObject)
