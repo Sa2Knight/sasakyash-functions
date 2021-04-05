@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions'
 import { Collection } from '../store'
+import { APIResponseType } from '../types'
 const cors = require('cors')({ origin: true })
 
 /**
@@ -9,6 +10,9 @@ export default functions.https.onRequest(async (request, response) => {
   await new Collection('zaim-get-money-cache').clear()
 
   cors(request, response, () => {
-    response.json({ data: { message: 'OK' } })
+    const responseObject: APIResponseType<'fetchClearCache'> = {
+      data: { message: 'OK' }
+    }
+    response.json(responseObject)
   })
 })

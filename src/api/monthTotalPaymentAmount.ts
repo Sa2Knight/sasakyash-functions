@@ -1,14 +1,8 @@
 import * as functions from 'firebase-functions'
 import { fetchPaymentList } from '../zaim'
 import * as dayjs from 'dayjs'
+import { APIResponseType } from '../types'
 const cors = require('cors')({ origin: true })
-
-type ResponseType = {
-  data: {
-    private: number
-    public: number
-  }
-}
 
 /**
  * monthTotalPaymentAmount API 指定月の総支払額を取得する
@@ -28,7 +22,7 @@ export default functions.https.onRequest(async (request, response) => {
   const privateTotalAmount = paymentList.filterBy('private').totalAmount()
   const publicTotalAmount = paymentList.filterBy('public').totalAmount()
 
-  const responseObject: ResponseType = {
+  const responseObject: APIResponseType<'fetchMonthTotalPaymentAmount'> = {
     data: {
       private: privateTotalAmount,
       public: publicTotalAmount

@@ -1,14 +1,8 @@
 import * as functions from 'firebase-functions'
 import * as dayjs from 'dayjs'
 import { fetchPaymentList } from '../zaim'
+import { APIResponseType } from '../types'
 const cors = require('cors')({ origin: true })
-
-type ResponseType = {
-  data: {
-    days: string[]
-    amounts: number[]
-  }
-}
 
 /**
  * 指定月の日ごとの支払額を集計する
@@ -32,7 +26,7 @@ export default functions.https.onRequest(async (request, response) => {
   const amountsByDate = filteredPaymentList.amountsByDate(dateFrom, dateTo)
 
   // レスポンスを作成する
-  const responseObject: ResponseType = {
+  const responseObject: APIResponseType<'fetchDailyPaymentAmount'> = {
     data: {
       days: Object.keys(amountsByDate),
       amounts: Object.values(amountsByDate)
