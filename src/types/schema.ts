@@ -101,7 +101,7 @@ export interface operations {
         content: {
           "application/json": {
             data: {
-              days: number[];
+              days: string[];
               amounts: number[];
             };
           };

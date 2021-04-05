@@ -149,7 +149,7 @@ paths:
                       days:
                         type: array
                         items:
-                          type: number
+                          type: string
                       amounts:
                         type: array
                         items:
