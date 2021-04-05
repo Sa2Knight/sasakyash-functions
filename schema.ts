@@ -4,28 +4,28 @@
  */
 
 export interface paths {
-  "/utilityBills": {
+  '/utilityBills': {
     /** 全期間を対象に、月ごとの電気・ガス・水道代の集計を取得する */
-    get: operations["fetchUtilityBills"];
-  };
-  "/clearCache": {
+    get: operations['fetchUtilityBills']
+  }
+  '/clearCache': {
     /** zaim API から取得した生データのキャッシュを破棄する */
-    get: operations["fetchClearCache"];
-  };
-  "/monthTotalPaymentAmount": {
+    get: operations['fetchClearCache']
+  }
+  '/monthTotalPaymentAmount': {
     /** 今月(または指定した月) の、公費/私費それぞれの累計支出額を取得する */
-    get: operations["fetchMonthTotalPaymentAmount"];
-    parameters: {};
-  };
-  "/dailyPaymentAmounts": {
+    get: operations['fetchMonthTotalPaymentAmount']
+    parameters: {}
+  }
+  '/dailyPaymentAmounts': {
     /** 日毎の公費または私費の支出額を集計する */
-    get: operations["fetchDailyPaymentAmount"];
-    parameters: {};
-  };
+    get: operations['fetchDailyPaymentAmount']
+    parameters: {}
+  }
 }
 
 export interface components {
-  schemas: {};
+  schemas: {}
 }
 
 export interface operations {
@@ -34,79 +34,79 @@ export interface operations {
     responses: {
       200: {
         content: {
-          "application/json": {
+          'application/json': {
             data: {
               /** 2021-03-01 など、各月の1日の日付文字列がキーとなる */
-              additionalProperties?: {
-                gas?: number;
-                water?: number;
-                electric?: number;
-              };
-            };
-          };
-        };
-      };
-    };
-  };
+              [key: string]: {
+                gas?: number
+                water?: number
+                electric?: number
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   /** zaim API から取得した生データのキャッシュを破棄する */
   fetchClearCache: {
     responses: {
       200: {
         content: {
-          "application/json": {
+          'application/json': {
             data: {
-              message: string;
-            };
-          };
-        };
-      };
-    };
-  };
+              message: string
+            }
+          }
+        }
+      }
+    }
+  }
   /** 今月(または指定した月) の、公費/私費それぞれの累計支出額を取得する */
   fetchMonthTotalPaymentAmount: {
     parameters: {
       query: {
         /** 省略時、現在時刻に基づく */
-        year?: number;
+        year?: number
         /** 省略時、現在時刻に基づく */
-        month?: number;
-      };
-    };
+        month?: number
+      }
+    }
     responses: {
       200: {
         content: {
-          "application/json": {
+          'application/json': {
             data: {
-              private: number;
-              public: number;
-            };
-          };
-        };
-      };
-    };
-  };
+              private: number
+              public: number
+            }
+          }
+        }
+      }
+    }
+  }
   /** 日毎の公費または私費の支出額を集計する */
   fetchDailyPaymentAmount: {
     parameters: {
       query: {
         /** 省略時、現在時刻に基づく */
-        year?: number;
+        year?: number
         /** 省略時、現在時刻に基づく */
-        month?: number;
-        paymentType?: "public" | "private";
-      };
-    };
+        month?: number
+        paymentType?: 'public' | 'private'
+      }
+    }
     responses: {
       200: {
         content: {
-          "application/json": {
+          'application/json': {
             data: {
-              days: number[];
-              amounts: number[];
-            };
-          };
-        };
-      };
-    };
-  };
+              days: number[]
+              amounts: number[]
+            }
+          }
+        }
+      }
+    }
+  }
 }
